@@ -14,8 +14,12 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // =========================
+    // Airport Exceptions
+    // =========================
+
     @ExceptionHandler(AirportAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleAlreadyExists(
+    public ResponseEntity<ErrorResponse> handleAirportAlreadyExists(
             AirportAlreadyExistsException ex
     ) {
 
@@ -30,7 +34,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AirportNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFound(
+    public ResponseEntity<ErrorResponse> handleAirportNotFound(
             AirportNotFoundException ex
     ) {
 
@@ -43,6 +47,44 @@ public class GlobalExceptionHandler {
                         )
                 );
     }
+
+    // =========================
+    // Aircraft Exceptions
+    // =========================
+
+    @ExceptionHandler(AircraftAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleAircraftAlreadyExists(
+            AircraftAlreadyExistsException ex
+    ) {
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(
+                        ErrorResponse.of(
+                                ex.getMessage(),
+                                List.of()
+                        )
+                );
+    }
+
+    @ExceptionHandler(AircraftNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAircraftNotFound(
+            AircraftNotFoundException ex
+    ) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(
+                        ErrorResponse.of(
+                                ex.getMessage(),
+                                List.of()
+                        )
+                );
+    }
+
+    // =========================
+    // Validation Exceptions
+    // =========================
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidation(
@@ -64,6 +106,10 @@ public class GlobalExceptionHandler {
                         )
                 );
     }
+
+    // =========================
+    // Generic Exception
+    // =========================
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneral(

@@ -126,4 +126,64 @@ public class GlobalExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(FlightAlreadyExistsException.class)
+public ResponseEntity<ErrorResponse> handleFlightAlreadyExists(
+        FlightAlreadyExistsException ex
+) {
+
+    return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body(
+                    ErrorResponse.of(
+                            ex.getMessage(),
+                            List.of()
+                    )
+            );
+}
+
+@ExceptionHandler(FlightNotFoundException.class)
+public ResponseEntity<ErrorResponse> handleFlightNotFound(
+        FlightNotFoundException ex
+) {
+
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(
+                    ErrorResponse.of(
+                            ex.getMessage(),
+                            List.of()
+                    )
+            );
+}
+
+@ExceptionHandler(InvalidFlightTimeException.class)
+public ResponseEntity<ErrorResponse> handleInvalidFlightTime(
+        InvalidFlightTimeException ex
+) {
+
+    return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(
+                    ErrorResponse.of(
+                            ex.getMessage(),
+                            List.of()
+                    )
+            );
+}
+
+@ExceptionHandler(SameAirportException.class)
+public ResponseEntity<ErrorResponse> handleSameAirport(
+        SameAirportException ex
+) {
+
+    return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(
+                    ErrorResponse.of(
+                            ex.getMessage(),
+                            List.of()
+                    )
+            );
+}
+
 }

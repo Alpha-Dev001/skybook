@@ -10,7 +10,7 @@ public record PassengerResponse(
     String email,
     String phone,
     String passportNumber,
-    LocalDate dateOFBirth,
+    LocalDate dateofBirth,
     PassengerStatus status
 ) {
 }

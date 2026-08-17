@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -185,5 +186,20 @@ public ResponseEntity<ErrorResponse> handleSameAirport(
                     )
             );
 }
+@ExceptionHandler(PassengerNotFoundException.class)
+public ResponseEntity<ErrorResponse> handlePassengerNotFound(
+        PassengerNotFoundException ex
+) {
+
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(
+                    ErrorResponse.of(
+                            ex.getMessage(),
+                            List.of()
+                    )
+            );
+}
+
 
 }

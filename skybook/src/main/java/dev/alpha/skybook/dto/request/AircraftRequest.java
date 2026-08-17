@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record AircraftRequest(
-
         @NotBlank(message = "Registration number is required")
         String registrationNumber,
 
@@ -28,6 +27,5 @@ public record AircraftRequest(
 
         @NotNull(message = "Status is required")
         AircraftStatus status
-
 ) {
 }

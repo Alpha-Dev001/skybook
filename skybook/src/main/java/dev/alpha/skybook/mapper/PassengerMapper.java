@@ -9,11 +9,8 @@ public class PassengerMapper {
     private PassengerMapper() {
     }
 
-    // Request DTO → Entity
     public static Passenger toEntity(PassengerRequest request) {
-
         Passenger passenger = new Passenger();
-
         passenger.setFirstName(request.firstName());
         passenger.setLastName(request.lastName());
         passenger.setEmail(request.email());
@@ -21,15 +18,10 @@ public class PassengerMapper {
         passenger.setPassportNumber(request.passportNumber());
         passenger.setDateOfBirth(request.dateOfBirth());
         passenger.setStatus(request.status());
-
         return passenger;
     }
 
-    // Entity → Response DTO
-    public static PassengerResponse toResponse(
-            Passenger passenger
-    ) {
-
+    public static PassengerResponse toResponse( Passenger passenger    ) {
         return new PassengerResponse(
                 passenger.getId(),
                 passenger.getFirstName(),
@@ -42,12 +34,7 @@ public class PassengerMapper {
         );
     }
 
-    // Update existing Entity from Request DTO
-    public static void updateEntity(
-            Passenger passenger,
-            PassengerRequest request
-    ) {
-
+    public static void updateEntity(Passenger passenger,PassengerRequest request) {
         passenger.setFirstName(request.firstName());
         passenger.setLastName(request.lastName());
         passenger.setEmail(request.email());

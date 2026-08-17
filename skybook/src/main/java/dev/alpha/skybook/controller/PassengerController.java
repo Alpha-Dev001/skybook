@@ -13,65 +13,39 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/passengers")
 public class PassengerController {
-
     private final PassengerService passengerService;
-
     public PassengerController(PassengerService passengerService) {
         this.passengerService = passengerService;
     }
 
     @PostMapping
-    public ResponseEntity<PassengerResponse> createPassenger(
-            @Valid @RequestBody PassengerRequest request
-    ) {
-
-        PassengerResponse response =
-                passengerService.createPassenger(request);
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
+    public ResponseEntity<PassengerResponse> createPassenger(@Valid @RequestBody PassengerRequest request){
+        PassengerResponse response = passengerService.createPassenger(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PassengerResponse> getPassengerById(
-            @PathVariable Long id
-    ) {
-
-        PassengerResponse response =
-                passengerService.getPassengerById(id);
-
+    public ResponseEntity<PassengerResponse> getPassengerById(@PathVariable Long id) {
+        PassengerResponse response = passengerService.getPassengerById(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping
     public ResponseEntity<List<PassengerResponse>> getAllPassengers() {
-
-        List<PassengerResponse> responses =
-                passengerService.getAllPassengers();
-
+        List<PassengerResponse> responses = passengerService.getAllPassengers();
         return ResponseEntity.ok(responses);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PassengerResponse> updatePassenger(
-            @PathVariable Long id,
-            @Valid @RequestBody PassengerRequest request
-    ) {
-
-        PassengerResponse response =
-                passengerService.updatePassenger(id, request);
-
+            @PathVariable Long id,@Valid @RequestBody PassengerRequest request) {
+        PassengerResponse response = passengerService.updatePassenger(id, request);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePassenger(
-            @PathVariable Long id
-    ) {
-
+    public ResponseEntity<Void> deletePassenger(@PathVariable Long id) {
         passengerService.deletePassenger(id);
-
         return ResponseEntity.noContent().build();
     }
 }

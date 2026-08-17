@@ -9,35 +9,27 @@ import java.time.LocalDateTime;
 
 
 public record FlightRequest(
-
         @NotBlank
         String flightNumber,
-
-
+        
         @NotNull
         Long aircraftId,
-
 
         @NotNull
         Long departureAirportId,
 
-
         @NotNull
         Long arrivalAirportId,
-
 
         @NotNull
         LocalDateTime departureTime,
 
-
         @NotNull
         LocalDateTime arrivalTime,
-
 
         @NotNull
         @DecimalMin("0.0")
         BigDecimal price,
-
 
         @NotNull
         FlightStatus status

@@ -7,19 +7,13 @@ public class FlightMapper {
 
     private FlightMapper() {
     }
-
     public static FlightResponse toResponse(Flight flight) {
-
         return new FlightResponse(
                 flight.getId(),
                 flight.getFlightNumber(),
-
                 flight.getAircraft().getRegistrationNumber(),
-
                 flight.getDepartureAirport().getName(),
-
                 flight.getArrivalAirport().getName(),
-
                 flight.getDepartureTime(),
                 flight.getArrivalTime(),
                 flight.getPrice(),

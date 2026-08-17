@@ -1,5 +1,4 @@
 package dev.alpha.skybook.dto.response;
-
 public record AirportResponse(
     Long id,
     String code,

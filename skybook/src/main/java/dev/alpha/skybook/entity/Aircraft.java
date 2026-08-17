@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "aircraft")
 public class Aircraft {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

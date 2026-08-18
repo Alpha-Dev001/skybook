@@ -149,6 +149,19 @@ public ResponseEntity<ErrorResponse> handlePassengerNotFound(
                     )
             );
 }
+@ExceptionHandler(BookingNotFoundException.class)
+public ResponseEntity<ErrorResponse> handleBookingNotFound(
+        BookingNotFoundException ex
+) {
 
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(
+                    ErrorResponse.of(
+                            ex.getMessage(),
+                            List.of()
+                    )
+            );
+}
 
 }

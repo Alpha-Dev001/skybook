@@ -22,12 +22,8 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<BookingResponse>> createBooking(
-            @Valid @RequestBody BookingRequest request
-    ) {
-
+    public ResponseEntity<ApiResponse<BookingResponse>> createBooking(@Valid @RequestBody BookingRequest request) {
         BookingResponse response = bookingService.createBooking(request);
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ApiResponse.success(
@@ -37,14 +33,9 @@ public class BookingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<BookingResponse>> getBookingById(
-            @PathVariable Long id
-    ) {
-
+    public ResponseEntity<ApiResponse<BookingResponse>> getBookingById(@PathVariable Long id) {
         BookingResponse response = bookingService.getBookingById(id);
-
-        return ResponseEntity
-                .ok(
+        return ResponseEntity.ok(
                         ApiResponse.success(
                                 "Booking retrieved successfully",
                                 response
@@ -54,11 +45,8 @@ public class BookingController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<BookingResponse>>> getAllBookings() {
-
         List<BookingResponse> response = bookingService.getAllBookings();
-
-        return ResponseEntity
-                .ok(
+        return ResponseEntity.ok(
                         ApiResponse.success(
                                 "Bookings retrieved successfully",
                                 response
@@ -67,16 +55,9 @@ public class BookingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<BookingResponse>> updateBooking(
-            @PathVariable Long id,
-            @Valid @RequestBody BookingRequest request
-    ) {
-
-        BookingResponse response =
-                bookingService.updateBooking(id, request);
-
-        return ResponseEntity
-                .ok(
+    public ResponseEntity<ApiResponse<BookingResponse>> updateBooking(@PathVariable Long id,@Valid @RequestBody BookingRequest request) {
+        BookingResponse response =bookingService.updateBooking(id, request);
+        return ResponseEntity.ok(
                         ApiResponse.success(
                                 "Booking updated successfully",
                                 response
@@ -91,8 +72,7 @@ public class BookingController {
 
         bookingService.deleteBooking(id);
 
-        return ResponseEntity
-                .ok(
+        return ResponseEntity.ok(
                         ApiResponse.success(
                                 "Booking deleted successfully",
                                 null

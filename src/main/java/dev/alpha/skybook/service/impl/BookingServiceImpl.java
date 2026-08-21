@@ -38,51 +38,26 @@ public class BookingServiceImpl implements BookingService {
     public BookingResponse createBooking(BookingRequest request) {
 
         Passenger passenger = passengerRepository
-                .findById(request.passengerId())
-                .orElseThrow(() ->
-                        new PassengerNotFoundException(
-                                "Passenger not found with id: "
-                                        + request.passengerId()
-                        )
-                );
+                .findById(request.passengerId()).orElseThrow(() 
+                ->new PassengerNotFoundException("Passenger not found with id: "+ request.passengerId()));
 
-        Flight flight = flightRepository
-                .findById(request.flightId())
-                .orElseThrow(() ->
-                        new FlightNotFoundException(
-                                "Flight not found with id: "
-                                        + request.flightId()
-                        )
-                );
+        Flight flight = flightRepository.findById(request.flightId()).orElseThrow(() ->
+                        new FlightNotFoundException("Flight not found with id: "+ request.flightId()));
 
-        Booking booking = BookingMapper.toEntity(
-                request,
-                passenger,
-                flight
-        );
-
+        Booking booking = BookingMapper.toEntity(request, passenger,flight);
         Booking savedBooking = bookingRepository.save(booking);
-
         return BookingMapper.toResponse(savedBooking);
     }
 
     @Override
     public BookingResponse getBookingById(Long id) {
-
-        Booking booking = bookingRepository
-                .findById(id)
-                .orElseThrow(() ->
-                        new BookingNotFoundException(
-                                "Booking not found with id: " + id
-                        )
-                );
-
+        Booking booking = bookingRepository.findById(id).orElseThrow(() ->
+                        new BookingNotFoundException("Booking not found with id: " + id));
         return BookingMapper.toResponse(booking);
     }
 
     @Override
     public List<BookingResponse> getAllBookings() {
-
         return bookingRepository
                 .findAll()
                 .stream()
@@ -91,60 +66,25 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingResponse updateBooking(
-            Long id,
-            BookingRequest request
-    ) {
+    public BookingResponse updateBooking(Long id,BookingRequest request) {
+        Booking booking = bookingRepository.findById(id).orElseThrow(() ->
+                        new BookingNotFoundException("Booking not found with id: " + id));
 
-        Booking booking = bookingRepository
-                .findById(id)
-                .orElseThrow(() ->
-                        new BookingNotFoundException(
-                                "Booking not found with id: " + id
-                        )
-                );
+        Passenger passenger = passengerRepository.findById(request.passengerId()).orElseThrow(() ->
+                        new PassengerNotFoundException("Passenger not found with id: "+ request.passengerId()));
 
-        Passenger passenger = passengerRepository
-                .findById(request.passengerId())
-                .orElseThrow(() ->
-                        new PassengerNotFoundException(
-                                "Passenger not found with id: "
-                                        + request.passengerId()
-                        )
-                );
+        Flight flight = flightRepository.findById(request.flightId()).orElseThrow(() ->
+                        new FlightNotFoundException("Flight not found with id: "+ request.flightId()));
 
-        Flight flight = flightRepository
-                .findById(request.flightId())
-                .orElseThrow(() ->
-                        new FlightNotFoundException(
-                                "Flight not found with id: "
-                                        + request.flightId()
-                        )
-                );
-
-        BookingMapper.updateEntity(
-                booking,
-                request,
-                passenger,
-                flight
-        );
-
+        BookingMapper.updateEntity(booking, request,passenger,flight);
         Booking updatedBooking = bookingRepository.save(booking);
-
         return BookingMapper.toResponse(updatedBooking);
     }
 
     @Override
     public void deleteBooking(Long id) {
-
-        Booking booking = bookingRepository
-                .findById(id)
-                .orElseThrow(() ->
-                        new BookingNotFoundException(
-                                "Booking not found with id: " + id
-                        )
-                );
-
+        Booking booking = bookingRepository.findById(id).orElseThrow(() ->
+                        new BookingNotFoundException( "Booking not found with id: " + id));
         bookingRepository.delete(booking);
     }
 }

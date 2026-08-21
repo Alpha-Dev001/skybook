@@ -48,24 +48,12 @@ public class FlightServiceImpl implements FlightService {
     public FlightResponse createFlight(FlightRequest request) {
 
         // Check if flight number already exists
-        if (flightRepository.existsByFlightNumber(
-                request.flightNumber()
-        )) {
-
-            throw new FlightAlreadyExistsException(
-                    "Flight with number "
-                            + request.flightNumber()
-                            + " already exists"
-            );
+        if (flightRepository.existsByFlightNumber(request.flightNumber())) {
+            throw new FlightAlreadyExistsException( "Flight with number "+ request.flightNumber()+ " already exists");
         }
-
         // Departure time must be before arrival time
-        if (!request.departureTime()
-                .isBefore(request.arrivalTime())) {
-
-            throw new InvalidFlightTimeException(
-                    "Departure time must be before arrival time"
-            );
+        if (!request.departureTime().isBefore(request.arrivalTime())) {
+            throw new InvalidFlightTimeException(  "Departure time must be before arrival time");
         }
 
         // Departure and arrival airports must be different
@@ -78,26 +66,13 @@ public class FlightServiceImpl implements FlightService {
         }
 
         // Find aircraft
-        Aircraft aircraft = aircraftRepository.findById(
-                request.aircraftId()
-        ).orElseThrow(() ->
-                new AircraftNotFoundException(
-                        "Aircraft with id "
-                                + request.aircraftId()
-                                + " not found"
-                )
+        Aircraft aircraft = aircraftRepository.findById(request.aircraftId())
+        .orElseThrow(() -> new AircraftNotFoundException("Aircraft with id " + request.aircraftId() + " not found")
         );
 
         // Find departure airport
-        Airport departureAirport = airportRepository.findById(
-                request.departureAirportId()
-        ).orElseThrow(() ->
-                new AirportNotFoundException(
-                        "Departure airport with id "
-                                + request.departureAirportId()
-                                + " not found"
-                )
-        );
+        Airport departureAirport = airportRepository.findById(request.departureAirportId()
+        ).orElseThrow(() ->new AirportNotFoundException("Departure airport with id "+ request.departureAirportId() + " not found"));
 
         // Find arrival airport
         Airport arrivalAirport = airportRepository.findById(

@@ -17,9 +17,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     private final PassengerRepository passengerRepository;
 
-    public PassengerServiceImpl(
-            PassengerRepository passengerRepository
-    ) {
+    public PassengerServiceImpl(PassengerRepository passengerRepository) {
         this.passengerRepository = passengerRepository;
     }
 
@@ -29,51 +27,28 @@ public class PassengerServiceImpl implements PassengerService {
     ) {
 
         if (passengerRepository.existsByEmail(request.email())) {
-            throw new PassengerAlreadyExistsException(
-                    "Passenger with email already exists: "
-                            + request.email()
-            );
+            throw new PassengerAlreadyExistsException("Passenger with email already exists: " + request.email());
         }
 
-        if (passengerRepository.existsByPassportNumber(
-                request.passportNumber()
-        )) {
-            throw new PassengerAlreadyExistsException(
-                    "Passenger with passport number already exists: "
-                            + request.passportNumber()
-            );
+        if (passengerRepository.existsByPassportNumber(request.passportNumber())) {
+            throw new PassengerAlreadyExistsException("Passenger with passport number already exists: "+ request.passportNumber());
         }
-
-        Passenger passenger =
-                PassengerMapper.toEntity(request);
-
-        Passenger savedPassenger =
-                passengerRepository.save(passenger);
-
+        Passenger passenger = PassengerMapper.toEntity(request);
+        Passenger savedPassenger = passengerRepository.save(passenger);
         return PassengerMapper.toResponse(savedPassenger);
     }
 
     @Override
     public PassengerResponse getPassengerById(Long id) {
 
-        Passenger passenger =
-                passengerRepository.findById(id)
-                        .orElseThrow(() ->
-                                new PassengerNotFoundException(
-                                        "Passenger not found with id: "
-                                                + id
-                                )
-                        );
-
+        Passenger passenger = passengerRepository.findById(id).orElseThrow(() -> 
+           new PassengerNotFoundException("Passenger not found with id: " + id));
         return PassengerMapper.toResponse(passenger);
     }
 
     @Override
     public List<PassengerResponse> getAllPassengers() {
-
-        List<Passenger> passengers =
-                passengerRepository.findAll();
-
+        List<Passenger> passengers = passengerRepository.findAll();
         return passengers.stream()
                 .map(PassengerMapper::toResponse)
                 .toList();
@@ -85,64 +60,29 @@ public class PassengerServiceImpl implements PassengerService {
             PassengerRequest request
     ) {
 
-        Passenger passenger =
-                passengerRepository.findById(id)
-                        .orElseThrow(() ->
-                                new PassengerNotFoundException(
-                                        "Passenger not found with id: "
-                                                + id
-                                )
-                        );
+        Passenger passenger = passengerRepository.findById(id).orElseThrow(() ->
+                                new PassengerNotFoundException("Passenger not found with id: "  + id ) );
 
         if (!passenger.getEmail().equals(request.email())
-                && passengerRepository.existsByEmail(
-                        request.email()
-                )) {
-
-            throw new PassengerAlreadyExistsException(
-                    "Passenger with email already exists: "
-                            + request.email()
-            );
+                && passengerRepository.existsByEmail(request.email() )) {
+            throw new PassengerAlreadyExistsException("Passenger with email already exists: "+ request.email() );
         }
 
-        if (!passenger.getPassportNumber().equals(
-                request.passportNumber()
-        )
-                && passengerRepository.existsByPassportNumber(
-                request.passportNumber()
+        if (!passenger.getPassportNumber().equals(request.passportNumber())&& passengerRepository.existsByPassportNumber(request.passportNumber()
         )) {
-
-            throw new PassengerAlreadyExistsException(
-                    "Passenger with passport number already exists: "
-                            + request.passportNumber()
-            );
+            throw new PassengerAlreadyExistsException("Passenger with passport number already exists: "  + request.passportNumber() );
         }
 
-        PassengerMapper.updateEntity(
-                passenger,
-                request
-        );
-
-        Passenger updatedPassenger =
-                passengerRepository.save(passenger);
-
-        return PassengerMapper.toResponse(
-                updatedPassenger
-        );
+        PassengerMapper.updateEntity( passenger,request);
+        Passenger updatedPassenger = passengerRepository.save(passenger);
+        return PassengerMapper.toResponse( updatedPassenger);
     }
 
     @Override
     public void deletePassenger(Long id) {
 
-        Passenger passenger =
-                passengerRepository.findById(id)
-                        .orElseThrow(() ->
-                                new PassengerNotFoundException(
-                                        "Passenger not found with id: "
-                                                + id
-                                )
-                        );
-
+        Passenger passenger = passengerRepository.findById(id) .orElseThrow(() ->
+                                new PassengerNotFoundException("Passenger not found with id: " + id ) );
         passengerRepository.delete(passenger);
     }
 }
